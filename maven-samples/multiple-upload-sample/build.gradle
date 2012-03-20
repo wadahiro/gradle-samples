@@ -1,0 +1,27 @@
+apply plugin: 'maven'
+
+def files = file('lib').listFiles()
+
+artifacts {
+    files.each { f ->
+        archives f
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://mycompany/content/repositories/thirdparty")
+            //repository(url: "file://localhost/${rootProject.rootDir}/repositories/thirdparty")
+            files.each { f ->
+                def id = f.name.replace(".jar", "")
+                addFilter(id) { artifact, file ->
+                    artifact.name == id
+                }
+                pom(id).groupId = 'org.example.library'
+                pom(id).artifactId = id
+                pom(id).version = '1.0'
+            }
+        }
+    }
+}
