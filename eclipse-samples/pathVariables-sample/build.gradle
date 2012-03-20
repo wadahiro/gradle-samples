@@ -1,0 +1,14 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-lang:commons-lang:2.6'
+}
+
+eclipse {
+    pathVariables 'GRADLE_USER_HOME': gradle.gradleUserHomeDir
+}
