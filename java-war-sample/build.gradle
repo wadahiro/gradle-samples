@@ -1,0 +1,17 @@
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:servlet-api:2.5'
+}
+
+war.dependsOn(':common:war')
+
+war << {
+    ant.zip(destfile: war.archivePath, duplicate: 'preserve', keepcompression: true, update: true) {
+        zipfileset (src: project(':common').war.archivePath)
+    }
+}
