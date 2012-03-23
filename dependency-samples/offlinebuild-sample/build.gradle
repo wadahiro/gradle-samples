@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+version = "1.0"
+
+dependencies {
+    if (file('repository').exists()) {
+        compile fileTree(dir: 'repository', include: '*.jar')
+    } else {
+        compile 'commons-digester:commons-digester:2.1'
+        testCompile 'junit:junit:4.10'
+    }
+}
+
+task releaseSource(type: Zip) {
+    classifier = 'sources'
+    from(projectDir) {
+        exclude '.git/**'
+        exclude '.gradle/**'
+        exclude '.settings/**'
+        exclude 'bin/**'
+        exclude 'build/**'
+    }
+    into('repository') {
+        from configurations.testCompile
+    }
+}
+
