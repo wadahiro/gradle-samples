@@ -1,1 +1,1 @@
-includeFlat 'web', 'service', 'share'
+include 'web', 'service', 'share'
